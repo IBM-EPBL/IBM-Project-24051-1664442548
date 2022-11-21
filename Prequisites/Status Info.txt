@@ -1,0 +1,8 @@
+Installed the Python IDLE.
+
+
+Installed the required python libraries:
+  pip install wiotp-sdk
+  pip install ibmcloudant
+  pip install opencv-python
+  pip install pyzbar
