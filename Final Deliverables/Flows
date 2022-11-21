@@ -1,0 +1,848 @@
+[
+    {
+        "id": "7f17282138ebdbab",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8276a176d524a71c",
+        "type": "ui_form",
+        "z": "7f17282138ebdbab",
+        "name": "",
+        "label": "",
+        "group": "ce25d913712a66f7",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Name",
+                "value": "Name",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Age",
+                "value": "Age",
+                "type": "number",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Mobile Number",
+                "value": "Mobile Number",
+                "type": "number",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Gender",
+                "value": "Gender",
+                "type": "checkbox",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "Name": "",
+            "Age": "",
+            "Mobile Number": "",
+            "Gender": false
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": "",
+        "className": "",
+        "x": 90,
+        "y": 720,
+        "wires": [
+            [
+                "26c405bce4518e06",
+                "7cc8cece41f9d7a9",
+                "855fc27047fe25fc"
+            ]
+        ]
+    },
+    {
+        "id": "26c405bce4518e06",
+        "type": "delay",
+        "z": "7f17282138ebdbab",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 260,
+        "y": 720,
+        "wires": [
+            [
+                "dee5508a6b6064d0"
+            ]
+        ]
+    },
+    {
+        "id": "dee5508a6b6064d0",
+        "type": "function",
+        "z": "7f17282138ebdbab",
+        "name": "function",
+        "func": "var a = global.get('a')\nvar s = []\nfor (let i = 0; i < a.length; i++) {\n    s.push(a[i])\n}\nif (s.length == 0) {\n    msg.options = [{ \"No seats Available\": 0 }]\n}\nelse {\n    msg.options = s\n}\nmsg.payload = s\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 720,
+        "wires": [
+            [
+                "c2365b209972bb13"
+            ]
+        ]
+    },
+    {
+        "id": "f8c45de831952c08",
+        "type": "function",
+        "z": "7f17282138ebdbab",
+        "name": "function",
+        "func": "global.set('s', msg.payload)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7cc8cece41f9d7a9",
+        "type": "function",
+        "z": "7f17282138ebdbab",
+        "name": "",
+        "func": "var s = global.get('s')\nvar a = global.get('a')\nfunction rem(x) {\n    for (let i = 0; i < a.length; i++) {\n        if (a[i] == x) {\n            a.splice(i, 1)\n        }\n    }\n}\nif (s == 1) {\n    global.set('s1', s)\n    rem(s)\n}\nelse if (s == 2) {\n    global.set('s2', s)\n    rem(s)\n}\nelse if (s == 3) {\n    global.set('s3', s)\n    rem(s)\n}\nelse if (s == 4) {\n    global.set('s4', s)\n    rem(s)\n}\nelse if (s == 5) {\n    global.set('s5', s)\n    rem(s)\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 640,
+        "wires": [
+            [
+                "a2f0cbf0447263fa"
+            ]
+        ]
+    },
+    {
+        "id": "855fc27047fe25fc",
+        "type": "function",
+        "z": "7f17282138ebdbab",
+        "name": "m",
+        "func": "global.set('m', msg.payload)\nvar a = global.get('s')\nif (a == 1 || a == 2 || a == 3 || a == 4 || a == 5) {\n    msg.payload = 0\n}\nelse {\n    msg.payload = 1\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 250,
+        "y": 560,
+        "wires": [
+            [
+                "0567d2234b85d9d4"
+            ]
+        ]
+    },
+    {
+        "id": "afcc6c6e8d9f5a0d",
+        "type": "function",
+        "z": "7f17282138ebdbab",
+        "name": "",
+        "func": "msg.payload = \"Ticket cannot be booked\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 560,
+        "wires": [
+            [
+                "436ea79489bf5c28"
+            ]
+        ]
+    },
+    {
+        "id": "c74a8a149d72fa6c",
+        "type": "function",
+        "z": "7f17282138ebdbab",
+        "name": "Storing Data in DB",
+        "func": "var m = global.get('m')\nvar d = new Date();\nvar utc = d.getTime() + (d.getTimezoneOffset() * 60000);\nvar offset = 5.5;\nvar newDate = new Date(utc + (3600000 * offset));\nvar n = newDate.toISOString()\nvar date = n.slice(0, 10)\nvar time = n.slice(11, 19)\nvar d1 = date + ',' + time\nmsg.payload = {\n    \"_id\": d1,\n    \"Name\": m.name,\n    \"Age\": m.age,\n    \"Mobile\": m.no,\n    \"Boarding\": global.get('b'),\n    \"Destination\": global.get('d'),\n    \"seat\": global.get('s'),\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 210,
+        "y": 460,
+        "wires": [
+            [
+                "dbf7679bc5a4aecf",
+                "09cca3bb257b0d5c"
+            ]
+        ]
+    },
+    {
+        "id": "dbf7679bc5a4aecf",
+        "type": "function",
+        "z": "7f17282138ebdbab",
+        "name": "QR code data",
+        "func": "msg.qrcodeinput = msg.payload._id\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 460,
+        "wires": [
+            [
+                "46e02646d3b4987d",
+                "046c68d0b9fc5c4c"
+            ]
+        ]
+    },
+    {
+        "id": "c2365b209972bb13",
+        "type": "ui_dropdown",
+        "z": "7f17282138ebdbab",
+        "name": "",
+        "label": "seat",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "ce25d913712a66f7",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "1",
+                "value": "Seat 1",
+                "type": "str"
+            },
+            {
+                "label": "2",
+                "value": "Seat 2",
+                "type": "str"
+            },
+            {
+                "label": "3",
+                "value": "Seat 3",
+                "type": "str"
+            },
+            {
+                "label": "4",
+                "value": "Seat 4",
+                "type": "str"
+            },
+            {
+                "label": "5",
+                "value": "Seat 5",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 670,
+        "y": 720,
+        "wires": [
+            [
+                "f8c45de831952c08"
+            ]
+        ]
+    },
+    {
+        "id": "436ea79489bf5c28",
+        "type": "ui_toast",
+        "z": "7f17282138ebdbab",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 890,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "0567d2234b85d9d4",
+        "type": "switch",
+        "z": "7f17282138ebdbab",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 450,
+        "y": 560,
+        "wires": [
+            [
+                "c74a8a149d72fa6c"
+            ],
+            [
+                "afcc6c6e8d9f5a0d"
+            ]
+        ]
+    },
+    {
+        "id": "a2f0cbf0447263fa",
+        "type": "debug",
+        "z": "7f17282138ebdbab",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "46e02646d3b4987d",
+        "type": "debug",
+        "z": "7f17282138ebdbab",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "09cca3bb257b0d5c",
+        "type": "cloudant out",
+        "z": "7f17282138ebdbab",
+        "name": "Booking",
+        "cloudant": "5a7878444f185ad7",
+        "database": "Booking",
+        "service": "_ext_",
+        "payonly": false,
+        "operation": "insert",
+        "x": 320,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "35080a91f6592b34",
+        "type": "delay",
+        "z": "7f17282138ebdbab",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "15",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 620,
+        "y": 340,
+        "wires": [
+            [
+                "6b6be52d7e9e87d9"
+            ]
+        ]
+    },
+    {
+        "id": "6b6be52d7e9e87d9",
+        "type": "function",
+        "z": "7f17282138ebdbab",
+        "name": "Empty Data",
+        "func": "msg.payload = \"\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 340,
+        "wires": [
+            [
+                "23b2bb17eb6ad820"
+            ]
+        ]
+    },
+    {
+        "id": "046c68d0b9fc5c4c",
+        "type": "qrcode-generator",
+        "z": "7f17282138ebdbab",
+        "name": "",
+        "qrtype": "text2qr",
+        "text2qrText": "",
+        "ssid": "",
+        "hiddenssid": false,
+        "wifitype": "",
+        "phonenum": "",
+        "smsphonenum": "",
+        "smstext": "",
+        "mailto": "",
+        "mailsubject": "",
+        "mailbody": "",
+        "latitude": "",
+        "longitude": "",
+        "colorlight": "#ffffff",
+        "colordark": "#000000",
+        "printstatus": false,
+        "x": 410,
+        "y": 240,
+        "wires": [
+            [
+                "23b2bb17eb6ad820",
+                "35080a91f6592b34",
+                "3d74561a39aa0ee7"
+            ]
+        ]
+    },
+    {
+        "id": "23b2bb17eb6ad820",
+        "type": "ui_template",
+        "z": "7f17282138ebdbab",
+        "group": "ce25d913712a66f7",
+        "name": "",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<div ng-bind-html=\"msg.payload\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 700,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3d74561a39aa0ee7",
+        "type": "function",
+        "z": "7f17282138ebdbab",
+        "name": "",
+        "func": "msg.payload = \"Ticket is Generated/Reserved\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 120,
+        "wires": [
+            [
+                "15ed43e29ff1aaea"
+            ]
+        ]
+    },
+    {
+        "id": "15ed43e29ff1aaea",
+        "type": "ui_toast",
+        "z": "7f17282138ebdbab",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 810,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "0a1400098224c003",
+        "type": "ui_button",
+        "z": "7f17282138ebdbab",
+        "name": "CLEAR",
+        "group": "ce25d913712a66f7",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "button",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 100,
+        "y": 800,
+        "wires": [
+            [
+                "c4e899275e3b07f8"
+            ]
+        ]
+    },
+    {
+        "id": "c4e899275e3b07f8",
+        "type": "function",
+        "z": "7f17282138ebdbab",
+        "name": "",
+        "func": "global.set('s1', 0)\nglobal.set('s2', 0)\nglobal.set('s3', 0)\nglobal.set('s4', 0)\nglobal.set('s5', 0)\nvar a1 = [1, 2, 3, 4, 5]\nglobal.set('a', a1)\nmsg.payload = global.get('a')\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 800,
+        "wires": [
+            [
+                "dee5508a6b6064d0"
+            ]
+        ]
+    },
+    {
+        "id": "e19b1e94c7c70bfb",
+        "type": "ui_dropdown",
+        "z": "7f17282138ebdbab",
+        "name": "",
+        "label": "Boarding station",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "ce25d913712a66f7",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Kanyakumari",
+                "value": "Kanyakumari",
+                "type": "str"
+            },
+            {
+                "label": "Thirunelveli",
+                "value": "Thirunelveli",
+                "type": "str"
+            },
+            {
+                "label": "Coimbatore",
+                "value": "Coimbatore",
+                "type": "str"
+            },
+            {
+                "label": "Chennai",
+                "value": "Chennai",
+                "type": "str"
+            },
+            {
+                "label": "Bangalore",
+                "value": "Bangalore",
+                "type": "str"
+            },
+            {
+                "label": "Hyderabad",
+                "value": "Hyderabad",
+                "type": "str"
+            },
+            {
+                "label": "Delhi",
+                "value": "Delhi",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 120,
+        "y": 880,
+        "wires": [
+            [
+                "5afca83159703cbe"
+            ]
+        ]
+    },
+    {
+        "id": "f7abdd24a4bf1227",
+        "type": "ui_dropdown",
+        "z": "7f17282138ebdbab",
+        "name": "",
+        "label": "Destination Station",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "ce25d913712a66f7",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Kanyakumari",
+                "value": "Kanyakumari",
+                "type": "str"
+            },
+            {
+                "label": "Thirunelveli",
+                "value": "Thirunelveli",
+                "type": "str"
+            },
+            {
+                "label": "Coimbatore",
+                "value": "Coimbatore",
+                "type": "str"
+            },
+            {
+                "label": "Chennai",
+                "value": "Chennai",
+                "type": "str"
+            },
+            {
+                "label": "Bangalore",
+                "value": "Bangalore",
+                "type": "str"
+            },
+            {
+                "label": "Hyderabad",
+                "value": "Hyderabad",
+                "type": "str"
+            },
+            {
+                "label": "Delhi",
+                "value": "Delhi",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 130,
+        "y": 960,
+        "wires": [
+            [
+                "471361df6ac6c417"
+            ]
+        ]
+    },
+    {
+        "id": "5afca83159703cbe",
+        "type": "function",
+        "z": "7f17282138ebdbab",
+        "name": "Boarding",
+        "func": "global.set('b', msg.payload)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "471361df6ac6c417",
+        "type": "function",
+        "z": "7f17282138ebdbab",
+        "name": "Destination",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 960,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2b1350471f3d6e02",
+        "type": "debug",
+        "z": "7f17282138ebdbab",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "babbd3ce38f851e2",
+        "type": "worldmap",
+        "z": "7f17282138ebdbab",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "zoom": "",
+        "layer": "",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "show",
+        "layers": "show",
+        "panit": "false",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "false",
+        "coords": "none",
+        "showgrid": "false",
+        "showruler": "false",
+        "allowFileDrop": "false",
+        "path": "/worldmap",
+        "overlist": "DR,CO,RA,DN,HM",
+        "maplist": "OSMG,OSMC,EsriC,EsriS,EsriT,EsriDG,UKOS",
+        "mapname": "",
+        "mapurl": "",
+        "mapopt": "",
+        "mapwms": false,
+        "x": 540,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "6d83287f3e6be4ef",
+        "type": "ibmiot in",
+        "z": "7f17282138ebdbab",
+        "authentication": "apiKey",
+        "apiKey": "444d2e27c52cf855",
+        "inputType": "cmd",
+        "logicalInterface": "",
+        "ruleId": "",
+        "deviceId": "23",
+        "applicationId": "",
+        "deviceType": "node",
+        "eventType": "+",
+        "commandType": "Data",
+        "format": "json",
+        "name": "IBM IoT",
+        "service": "registered",
+        "allDevices": "",
+        "allApplications": "",
+        "allDeviceTypes": false,
+        "allLogicalInterfaces": "",
+        "allEvents": true,
+        "allCommands": "",
+        "allFormats": "",
+        "qos": 0,
+        "x": 250,
+        "y": 1100,
+        "wires": [
+            [
+                "2b1350471f3d6e02",
+                "babbd3ce38f851e2"
+            ]
+        ]
+    },
+    {
+        "id": "ce25d913712a66f7",
+        "type": "ui_group",
+        "name": "QR CODE GEN",
+        "tab": "08650a6c52aeafc4",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "5a7878444f185ad7",
+        "type": "cloudant",
+        "host": "https://cloud.ibm.com/",
+        "name": "Cloud service",
+        "credentials": {}
+    },
+    {
+        "id": "444d2e27c52cf855",
+        "type": "ibmiot",
+        "name": "Sanjay",
+        "keepalive": "60",
+        "serverName": "mo229k.messaging.internetofthings.ibmcloud.com",
+        "cleansession": true,
+        "appId": "",
+        "shared": false,
+        "credentials": {
+            "user": "a-mo229k-yrhddsqfta",
+            "password": ""
+        }
+    },
+    {
+        "id": "08650a6c52aeafc4",
+        "type": "ui_tab",
+        "name": "QR CODE GEN",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
